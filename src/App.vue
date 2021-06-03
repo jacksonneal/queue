@@ -1,6 +1,18 @@
 <template>
-  <img alt="Vue logo" src="./assets/logo.png" />
-  <HelloWorld msg="Welcome to The Queue" />
+  <div class="p-fluid p-grid">
+    <span class="p-float-label p-input-icon-right">
+      <i
+        class="pi pi-question-circle"
+        v-tooltip="
+          'For tracking ideas, plans, and future adventures.\n Dedicated to You.'
+        "
+      />
+    </span>
+    <div class="p-col">
+      <img id="logo" alt="Queue logo" src="./assets/logo.png" />
+    </div>
+  </div>
+  <HelloWorld />
 </template>
 
 <script lang="ts">

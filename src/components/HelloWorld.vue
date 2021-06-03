@@ -1,94 +1,80 @@
 <template>
-  <div class="hello">
-    <h1>{{ msg }}</h1>
-    <p>
-      For a guide and recipes on how to configure / customize this project,<br />
-      check out the
-      <a href="https://cli.vuejs.org" target="_blank" rel="noopener"
-        >vue-cli documentation</a
-      >.
-    </p>
-    <h3>Installed CLI Plugins</h3>
-    <ul>
-      <li>
-        <a
-          href="https://github.com/vuejs/vue-cli/tree/dev/packages/%40vue/cli-plugin-typescript"
-          target="_blank"
-          rel="noopener"
-          >typescript</a
-        >
-      </li>
-    </ul>
-    <h3>Essential Links</h3>
-    <ul>
-      <li>
-        <a href="https://vuejs.org" target="_blank" rel="noopener">Core Docs</a>
-      </li>
-      <li>
-        <a href="https://forum.vuejs.org" target="_blank" rel="noopener"
-          >Forum</a
-        >
-      </li>
-      <li>
-        <a href="https://chat.vuejs.org" target="_blank" rel="noopener"
-          >Community Chat</a
-        >
-      </li>
-      <li>
-        <a href="https://twitter.com/vuejs" target="_blank" rel="noopener"
-          >Twitter</a
-        >
-      </li>
-      <li>
-        <a href="https://news.vuejs.org" target="_blank" rel="noopener">News</a>
-      </li>
-    </ul>
-    <h3>Ecosystem</h3>
-    <ul>
-      <li>
-        <a href="https://router.vuejs.org" target="_blank" rel="noopener"
-          >vue-router</a
-        >
-      </li>
-      <li>
-        <a href="https://vuex.vuejs.org" target="_blank" rel="noopener">vuex</a>
-      </li>
-      <li>
-        <a
-          href="https://github.com/vuejs/vue-devtools#vue-devtools"
-          target="_blank"
-          rel="noopener"
-          >vue-devtools</a
-        >
-      </li>
-      <li>
-        <a href="https://vue-loader.vuejs.org" target="_blank" rel="noopener"
-          >vue-loader</a
-        >
-      </li>
-      <li>
-        <a
-          href="https://github.com/vuejs/awesome-vue"
-          target="_blank"
-          rel="noopener"
-          >awesome-vue</a
-        >
-      </li>
-    </ul>
+  <div class="card">
+    <Button
+      @click="toggleQueueDialogue()"
+      type="button"
+      label="enqueue"
+      style="width: 20rem"
+      class="p-m-1 p-button-raised p-button-info p-button-outlined p-button-lg"
+    />
+    <Button
+      @click="toggleDequeueDialogue()"
+      type="button"
+      label="dequeue"
+      style="width: 20rem"
+      class="p-m-1 p-button-raised p-button-info p-button-outlined p-button-lg"
+    />
+    <Dialog v-model:visible="isQViz">
+      <template #header>
+        <h3>adding to queue</h3>
+      </template>
+      Feature not yet available.
+      <template #footer>
+        <Button
+          @click="toggleQueueDialogue()"
+          label="cancel"
+          icon="pi pi-times"
+          class="p-button-text"
+        />
+        <Button
+          @click="toggleQueueDialogue()"
+          label="queue"
+          icon="pi pi-check"
+          autofocus
+        />
+      </template>
+    </Dialog>
+    <Dialog v-model:visible="isDqViz">
+      <template #header>
+        <h3>received from queue</h3>
+      </template>
+      Feature not yet available.
+      <template #footer>
+        <Button
+          @click="toggleDequeueDialogue()"
+          label="reject"
+          icon="pi pi-times"
+          class="p-button-text"
+        />
+        <Button
+          @click="toggleDequeueDialogue()"
+          label="accept"
+          icon="pi pi-check"
+          autofocus
+        />
+      </template>
+    </Dialog>
   </div>
 </template>
 
 <script lang="ts">
-import { Options, Vue } from "vue-class-component";
+import { ref } from "vue";
+export default {
+  setup() {
+    const isQViz = ref(false);
+    const isDqViz = ref(false);
 
-@Options({
-  props: {
-    msg: String,
+    function toggleQueueDialogue(): void {
+      isQViz.value = !isQViz.value;
+    }
+
+    function toggleDequeueDialogue(): void {
+      isDqViz.value = !isDqViz.value;
+    }
+
+    return { isQViz, isDqViz, toggleQueueDialogue, toggleDequeueDialogue };
   },
-})
-export default class HelloWorld extends Vue {
-  msg!: string;
-}
+};
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
