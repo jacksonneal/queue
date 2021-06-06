@@ -1,4 +1,9 @@
+const configureAPI = require("./src/server/configure");
+
 module.exports = {
+  devServer: {
+    before: configureAPI,
+  },
   configureWebpack: {
     devtool: "source-map",
   },

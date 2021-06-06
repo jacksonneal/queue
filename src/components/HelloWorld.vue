@@ -27,7 +27,7 @@
           class="p-button-text"
         />
         <Button
-          @click="toggleQueueDialogue()"
+          @click="addToQueue()"
           label="queue"
           icon="pi pi-check"
           autofocus
@@ -59,6 +59,13 @@
 
 <script lang="ts">
 import { ref } from "vue";
+import {
+  SQSClient,
+  SendMessageCommand,
+  SendMessageCommandInput,
+} from "@aws-sdk/client-sqs";
+import { fromEnv } from "@aws-sdk/credential-provider-env";
+
 export default {
   setup() {
     const isQViz = ref(false);
@@ -72,7 +79,37 @@ export default {
       isDqViz.value = !isDqViz.value;
     }
 
-    return { isQViz, isDqViz, toggleQueueDialogue, toggleDequeueDialogue };
+    async function addToQueue(): Promise<void> {
+      process.env.AWS_ACCESS_KEY_ID = "AKIAQL54BOILXR4O4QP6";
+      process.env.AWS_SECRET_ACCESS_KEY =
+        "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";
+      const params: SendMessageCommandInput = {
+        MessageBody: "HI there",
+        QueueUrl: "https://sqs.us-east-2.amazonaws.com/025627292183/queue",
+      };
+      console.log(process.env);
+      const command = new SendMessageCommand(params);
+      const client = new SQSClient({
+        region: "us-east-2",
+        credentialDefaultProvider: fromEnv,
+      });
+      try {
+        const data = await client.send(command);
+        console.log(data);
+      } catch (error) {
+        console.log(error);
+      } finally {
+        toggleQueueDialogue();
+      }
+    }
+
+    return {
+      isQViz,
+      isDqViz,
+      toggleQueueDialogue,
+      toggleDequeueDialogue,
+      addToQueue,
+    };
   },
 };
 </script>

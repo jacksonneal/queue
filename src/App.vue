@@ -2,10 +2,8 @@
   <div class="p-fluid p-grid">
     <span class="p-float-label p-input-icon-right">
       <i
-        class="pi pi-question-circle"
-        v-tooltip="
-          'For tracking ideas, plans, and future adventures.\n Dedicated to You.'
-        "
+        class="pi pi-info-circle"
+        v-tooltip="'For tracking ideas, plans, and adventures.'"
       />
     </span>
     <div class="p-col">
