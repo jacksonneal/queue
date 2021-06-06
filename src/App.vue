@@ -2,7 +2,7 @@
   <div class="p-fluid p-grid">
     <span class="p-float-label p-input-icon-right">
       <i
-        class="pi pi-info-circle"
+        class="pi pi-info-circle p-m-2"
         v-tooltip="'For tracking ideas, plans, and adventures.'"
       />
     </span>
