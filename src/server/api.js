@@ -11,10 +11,8 @@ router.get("/hello", (req, res) => {
   res.send("Hello from queue server.");
 });
 
+// eslint-disable-next-line no-unused-vars
 router.post("/send", async (req, res) => {
-  process.env.AWS_ACCESS_KEY_ID = "AKIAQL54BOILXR4O4QP6";
-  process.env.AWS_SECRET_ACCESS_KEY =
-    "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";
   const params = {
     MessageBody: req.body.msg,
     QueueUrl: "https://sqs.us-east-2.amazonaws.com/025627292183/queue",
@@ -24,20 +22,13 @@ router.post("/send", async (req, res) => {
     region: "us-east-2",
   });
   try {
-    const data = await client.send(command);
-    console.log(data);
+    await client.send(command);
   } catch (error) {
     console.log(error);
-    res.send(error);
-  } finally {
-    res.send("success");
   }
 });
 
 router.get("/receive", async (req, res) => {
-  process.env.AWS_ACCESS_KEY_ID = "AKIAQL54BOILXR4O4QP6";
-  process.env.AWS_SECRET_ACCESS_KEY =
-    "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";
   const params = {
     QueueUrl: "https://sqs.us-east-2.amazonaws.com/025627292183/queue",
     MaxNumberOfMessages: 1,
@@ -49,9 +40,8 @@ router.get("/receive", async (req, res) => {
   try {
     const data = await client.send(command);
     res.send({
-      msgs: data.Messages,
+      msgs: data.Messages || [],
     });
-    console.log(data);
   } catch (error) {
     console.log(error);
     res.send(error);
@@ -61,9 +51,6 @@ router.get("/receive", async (req, res) => {
 });
 
 router.post("/delete", async (req, res) => {
-  process.env.AWS_ACCESS_KEY_ID = "AKIAQL54BOILXR4O4QP6";
-  process.env.AWS_SECRET_ACCESS_KEY =
-    "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";
   const params = {
     ReceiptHandle: req.body.msg,
     QueueUrl: "https://sqs.us-east-2.amazonaws.com/025627292183/queue",

@@ -89,7 +89,6 @@ export default {
     }
 
     async function receiveFromQueue(): Promise<void> {
-      console.log("here");
       receivedMessage.value = await receiveMessage();
       toggleDequeueDialogue();
     }
