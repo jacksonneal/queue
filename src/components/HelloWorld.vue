@@ -87,7 +87,6 @@ export default {
         MessageBody: "HI there",
         QueueUrl: "https://sqs.us-east-2.amazonaws.com/025627292183/queue",
       };
-      console.log(process.env);
       const command = new SendMessageCommand(params);
       const client = new SQSClient({
         region: "us-east-2",
