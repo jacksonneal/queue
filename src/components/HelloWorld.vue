@@ -18,7 +18,10 @@
       <template #header>
         <h3>adding to queue</h3>
       </template>
-      Feature not yet available.
+      <span class="p-m-1 p-float-label">
+        <InputText id="message" type="text" v-model="message" />
+        <label for="message">message</label>
+      </span>
       <template #footer>
         <Button
           @click="toggleQueueDialogue()"
@@ -67,6 +70,7 @@ import {
 
 export default {
   setup() {
+    const message = ref("");
     const isQViz = ref(false);
     const isDqViz = ref(false);
     const receivedMessage: any = ref("No message received yet.");
@@ -80,7 +84,7 @@ export default {
     }
 
     async function addToQueue(): Promise<void> {
-      sendMessage("MESSAGE PLACEHOLDER");
+      sendMessage(message.value);
       toggleQueueDialogue();
     }
 
@@ -96,6 +100,7 @@ export default {
     }
 
     return {
+      message,
       receivedMessage,
       isQViz,
       isDqViz,

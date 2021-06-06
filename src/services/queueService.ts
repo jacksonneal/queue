@@ -1,6 +1,12 @@
 import axios from "axios";
 
-const sendMessage = (msg: string) => {};
+const sendMessage = async (msg: string) => {
+  try {
+    await axios.post("/api/send", { msg });
+  } catch (error) {
+    console.error(error);
+  }
+};
 
 const receiveMessage = async (): Promise<string> => {
   try {
