@@ -23,4 +23,4 @@ npm run lint
 ### Customize configuration
 See [Configuration Reference](https://cli.vuejs.org/config/).
 
-![example workflow](https://github.com/github/docs/actions/workflows/blank.yml/badge.svg)
+![example workflow](https://github.com/jacksonneal/queue/.git/workflows/blank.yml/badge.svg)
