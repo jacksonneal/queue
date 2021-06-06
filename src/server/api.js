@@ -40,29 +40,30 @@ router.get("/receive", async (req, res) => {
     "cSE8R6ZXLm7vbna9PGlgKSEK5xKNZOxJVxQfGYhv";
   const params = {
     QueueUrl: "https://sqs.us-east-2.amazonaws.com/025627292183/queue",
+    MaxNumberOfMessages: 1,
   };
-  console.log(process.env);
   const command = new ReceiveMessageCommand(params);
   const client = new SQSClient({
     region: "us-east-2",
   });
   try {
     const data = await client.send(command);
-    res.send(data);
+    res.send({
+      msgs: data.Messages,
+    });
     console.log(data);
   } catch (error) {
     console.log(error);
     res.send(error);
   } finally {
-    res.send("success");
+    // res.send("success");
   }
 });
 
-router.get("/delete", async (req, res) => {
+router.post("/delete", async (req, res) => {
   process.env.AWS_ACCESS_KEY_ID = "AKIAQL54BOILXR4O4QP6";
   process.env.AWS_SECRET_ACCESS_KEY =
     "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";
-  console.log(req.body.msg);
   const params = {
     ReceiptHandle: req.body.msg,
     QueueUrl: "https://sqs.us-east-2.amazonaws.com/025627292183/queue",
@@ -74,12 +75,11 @@ router.get("/delete", async (req, res) => {
   try {
     const data = await client.send(command);
     res.send(data);
-    console.log(data);
   } catch (error) {
     console.log(error);
     res.send(error);
   } finally {
-    res.send("success");
+    // res.send("success");
   }
 });
 

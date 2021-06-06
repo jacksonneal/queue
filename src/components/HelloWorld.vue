@@ -8,7 +8,7 @@
       class="p-m-1 p-button-raised p-button-info p-button-outlined p-button-lg"
     />
     <Button
-      @click="toggleDequeueDialogue()"
+      @click="receiveFromQueue()"
       type="button"
       label="dequeue"
       style="width: 20rem"
@@ -38,7 +38,7 @@
       <template #header>
         <h3>received from queue</h3>
       </template>
-      Feature not yet available.
+      {{ receivedMessage.Body }}
       <template #footer>
         <Button
           @click="toggleDequeueDialogue()"
@@ -47,7 +47,7 @@
           class="p-button-text"
         />
         <Button
-          @click="toggleDequeueDialogue()"
+          @click="removeFromQueue()"
           label="accept"
           icon="pi pi-check"
           autofocus
@@ -60,16 +60,16 @@
 <script lang="ts">
 import { ref } from "vue";
 import {
-  SQSClient,
-  SendMessageCommand,
-  SendMessageCommandInput,
-} from "@aws-sdk/client-sqs";
-import { fromEnv } from "@aws-sdk/credential-provider-env";
+  sendMessage,
+  receiveMessage,
+  deleteMessage,
+} from "../services/queueService";
 
 export default {
   setup() {
     const isQViz = ref(false);
     const isDqViz = ref(false);
+    const receivedMessage: any = ref("No message received yet.");
 
     function toggleQueueDialogue(): void {
       isQViz.value = !isQViz.value;
@@ -80,34 +80,30 @@ export default {
     }
 
     async function addToQueue(): Promise<void> {
-      process.env.AWS_ACCESS_KEY_ID = "AKIAQL54BOILXR4O4QP6";
-      process.env.AWS_SECRET_ACCESS_KEY =
-        "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";
-      const params: SendMessageCommandInput = {
-        MessageBody: "HI there",
-        QueueUrl: "https://sqs.us-east-2.amazonaws.com/025627292183/queue",
-      };
-      const command = new SendMessageCommand(params);
-      const client = new SQSClient({
-        region: "us-east-2",
-        credentialDefaultProvider: fromEnv,
-      });
-      try {
-        const data = await client.send(command);
-        console.log(data);
-      } catch (error) {
-        console.log(error);
-      } finally {
-        toggleQueueDialogue();
-      }
+      sendMessage("MESSAGE PLACEHOLDER");
+      toggleQueueDialogue();
+    }
+
+    async function receiveFromQueue(): Promise<void> {
+      console.log("here");
+      receivedMessage.value = await receiveMessage();
+      toggleDequeueDialogue();
+    }
+
+    async function removeFromQueue(): Promise<void> {
+      deleteMessage(receivedMessage.value.ReceiptHandle);
+      toggleDequeueDialogue();
     }
 
     return {
+      receivedMessage,
       isQViz,
       isDqViz,
       toggleQueueDialogue,
       toggleDequeueDialogue,
       addToQueue,
+      receiveFromQueue,
+      removeFromQueue,
     };
   },
 };
