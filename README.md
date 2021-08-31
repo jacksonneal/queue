@@ -1,4 +1,5 @@
 # queue
+Simple queue application experimenting with AWS SQS. Deployed with heroku.
 
 ## Project setup
 ```
