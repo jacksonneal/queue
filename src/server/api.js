@@ -12,9 +12,9 @@ router.get("/hello", (req, res) => {
 });
 
 router.post("/send", async (req, res) => {
-  process.env.AWS_ACCESS_KEY_ID = "AKIAQL54BOILXR4O4QP6";
+  process.env.AWS_ACCESS_KEY_ID = "a";
   process.env.AWS_SECRET_ACCESS_KEY =
-    "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";
+    "b";
   const params = {
     MessageBody: req.body.msg,
     QueueUrl: "https://sqs.us-east-2.amazonaws.com/025627292183/queue",
@@ -35,9 +35,9 @@ router.post("/send", async (req, res) => {
 });
 
 router.get("/receive", async (req, res) => {
-  process.env.AWS_ACCESS_KEY_ID = "AKIAQL54BOILXR4O4QP6";
+  process.env.AWS_ACCESS_KEY_ID = "a";
   process.env.AWS_SECRET_ACCESS_KEY =
-    "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";
+    "b";
   const params = {
     QueueUrl: "https://sqs.us-east-2.amazonaws.com/025627292183/queue",
     MaxNumberOfMessages: 1,
@@ -61,9 +61,9 @@ router.get("/receive", async (req, res) => {
 });
 
 router.post("/delete", async (req, res) => {
-  process.env.AWS_ACCESS_KEY_ID = "AKIAQL54BOILXR4O4QP6";
+  process.env.AWS_ACCESS_KEY_ID = "a";
   process.env.AWS_SECRET_ACCESS_KEY =
-    "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";
+    "b";
   const params = {
     ReceiptHandle: req.body.msg,
     QueueUrl: "https://sqs.us-east-2.amazonaws.com/025627292183/queue",
